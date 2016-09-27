@@ -13,17 +13,16 @@ from application import file_reader
 
 class TestFileOpen(unittest.TestCase):
     '''
-    Test this function returns a trained mnb classifier.
-    We'll test this against data we've trained.
+    Test this function returns data from a file upload.
     '''
 
     def test(self):
-        file_location = 'test_data.txt'
+        file_location = 'test/test_data.cells'
         data = file_reader.get_board_data(file_location)
-        assert data[0][0] == 0
-        assert data[0][1] == 1
-        assert data[1][0] == 1
-        assert data[1][1] == 0
+        assert data[0][0] == '.'
+        assert data[0][1] == 'O'
+        assert data[1][0] == 'O'
+        assert data[1][1] == '.'
 
 if __name__ == '__main__':
     unittest.main()
