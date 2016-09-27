@@ -29,14 +29,9 @@ class Board(object):
             row_with_buffers = ''.join([side_buffer, row, side_buffer])
             data_with_side_buffers.append(row_with_buffers)
 
-            print(row)
-            print(row_with_buffers)
-
         top_bottom_buffer = ['.' * self.wide] * self.side_buffer_size
 
         data_with_buffers = sum([top_bottom_buffer, data_with_side_buffers, top_bottom_buffer], [])
-
-        print(data_with_buffers)
 
         return data_with_buffers
 
