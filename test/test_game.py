@@ -63,7 +63,7 @@ class TestSquaresEvaluate_1(unittest.TestCase):
 
     def test(self):
         '''
-        Test data looks like
+        Test data looks like, all will survive
 
             O.
             OO
@@ -141,6 +141,46 @@ class TestSquaresEvaluate_2(unittest.TestCase):
         assert board_data[2][0].will_be_alive == True
         assert board_data[2][1].will_be_alive == True
         assert board_data[2][2].will_be_alive == False
+
+class TestSquaresChangeStates(unittest.TestCase):
+    '''
+    Once neighbours are counted, loop through and evaluate whether each
+    square will live or die.
+    '''
+
+    def test(self):
+        '''
+        Test data looks like, all will die
+
+            .O
+            O.
+
+        '''
+
+        mock_data_from_file = ['..']
+
+        simulation = game.Game(mock_data_from_file)
+
+        s_0_0 = squares.Square(0, 0, False)
+        s_0_1 = squares.Square(0, 1, True)
+        s_1_0 = squares.Square(1, 0, True)
+        s_1_1 = squares.Square(1, 1, False)
+
+        board_data = [
+            [s_0_0, s_0_1],
+            [s_1_0, s_1_1]
+        ]
+
+        for row in board_data:
+            for square in row:
+                square.will_be_alive = False
+
+        simulation.squares_change_states(board_data)
+ 
+        assert board_data[0][0].is_alive == False
+        assert board_data[0][1].is_alive == False
+        assert board_data[1][0].is_alive == False
+        assert board_data[1][1].is_alive == False
 
 if __name__ == '__main__':
     unittest.main()

@@ -70,7 +70,6 @@ class Game(object):
                 square.is_alive = square.will_be_alive
                 square.neighbour_count = 0
 
-
     def update_board(self):
         '''
         This will be called from the self.animation object, since Tkinter will handle the game loop.
