@@ -9,7 +9,7 @@ class Animation(object):
 
     def __init__(self, game, board):
         self.milliseconds_between_frames = 500
-        self.square_width = 3
+        self.square_width = 10
         self.canvas_width = board.wide * self.square_width
         self.canvas_height = board.high * self.square_width
         self.anim_tk = Tk()
