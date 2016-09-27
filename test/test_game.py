@@ -144,8 +144,8 @@ class TestSquaresEvaluate_2(unittest.TestCase):
 
 class TestSquaresChangeStates(unittest.TestCase):
     '''
-    Once neighbours are counted, loop through and evaluate whether each
-    square will live or die.
+    Once neighbours are evaluated in terms of life or death, loop through the squares
+    and change their states.
     '''
 
     def test(self):
