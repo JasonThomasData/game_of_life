@@ -5,7 +5,16 @@ The GOL is an environment where cells live and die depending on the numbers of t
 This is interesting to me for two reasons:
 
 - Given an arrangement of cells in any large number, it would be almost impossible for a human to determine what would happen on the board
-- The universe they create is entirely deterministic and the sequence for any pattern will always be the same
+
+- The universe in the simulation is entirely deterministic and the sequence for any pattern will always be the same
+
+The rules for this synthetic universe are pretty simple:
+
+- If a living square has 2 or three neighbours, it will survive
+
+- If a dead square has three neighbours, it will live the next generation
+
+- All other squares will die
 
 I have read that making the simple glider shape is a code interview question, so here it is:
 
@@ -19,15 +28,17 @@ All of these shapes in the ```maps/``` folder were downloaded from this [online 
 
 ###Installation
 
-This guide will work on an Ubuntu machine, and possibly other OS, but I can't be certain.
+This project uses Python3.
+
+These installation details will work for an Ubuntu machine, and possibly other OS, but I can't be certain.
 
 Clone this repository to your computer:
 
     git clone https://github.com/JasonThomasData/game_of_life
 
-Navigate to that root folder.
+Navigate to that game_of_life folder.
 
-Get virtualenv with these commands:
+Get ```virtualenv``` with these commands:
 
     sudo apt-get update
     
@@ -45,7 +56,7 @@ Get pip3 to install dependencies:
 
     pip3 install -r requirements.txt
 
-By the way, there is only one dependency there, but using requirements.txt is a good habbit. Alternatively, do:
+By the way, there is only one dependency there, but using requirements.txt is a good habit. Alternatively, do:
 
     pip3 install numpy
 
@@ -55,25 +66,29 @@ Let's suppose we want to load the glider.cells map. Do:
 
     python3 run_app.py maps/glider.cells
 
-That will open a window with the animation in it. You can close that animation at the window or by doing ```ctrl+c``` from the terminal.
+That will open a window with the animation in it. You can close that animation the window, or by doing ```ctrl+c``` from the terminal.
 
-If you want to change the animation, change the properties of the animation class in the application folder.
+If you want to change the animation, change the properties of the animation class in the application folder. 
 
 ###Tests
 
-To run the tests, stay in the root folder. Do:
+To run the tests, stay in the project's root folder and run:
 
     python3 -m unittest discover test/
 
 ###Discussion
 
+This project uses Numpy, since that's a good way to handle very large MD lists. Itertools is used for looping, where possible/makes sense. Tkinter is used for the animation.
+
+The use of Tkinter required the Animation class to handle the game loop, since Tkinter has a built in method for animation loops, so that's the sensible way to do that.
+
 There are two things about this project I would like to change if I get time:
 
-- The Animation class has details about square width and animation speed. The Board class has details about the buffer around the uploaded shapes. It would be better to have those detals passed to them from the ```run_app```. Then we could allow the user to declare those properties at the command line. It would just make a lot of sense to have ```run_app``` as the single point of user interface.
+- The Animation class has details about square width and animation speed. The Board class has details about the buffer around the uploaded shapes. It would be better to have those detals passed to them from ```run_app```. Then we could allow the user to declare those properties at the terminal. It would just make a lot of sense to have ```run_app``` as the single point of user interface.
 
 - Also at the terminal, I would add an option to generate cells randomly on the board, as that would be interesting to have random data.
 
-This project may be great for a machine learning project, to see what arrangement can get the best outcome in terms of the most interesting results or the longest running game. To do that, I think a reinforcement learning algorithm or nueral network would do the trick.
+This project may be great to do some machine learning to see what arrangement can get the best outcome: a) the most interesting results b) sustainable shapes c) the longest running game. To do that, I think a reinforcement learning algorithm or neural network would do the trick. This machine learning project could be as simple as piping the result of this program to a machine learning algorithm, with a database attached to collect the results.
 
 I made this project with Python3, Ubuntu 16.04 and Vim.
 
@@ -89,5 +104,6 @@ I did this project because:
 
 - Making a glider is a code test interviewers ask
 
-So I think you should make your own implementation of GOL since it's fun to do.
+I suggest making your own GOL could be a lot of fun, but of course if you
+'d prefer to contribute then make a pull request.
 
