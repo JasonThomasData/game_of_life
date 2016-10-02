@@ -10,9 +10,12 @@ class Game(object):
     This is where the simulation will occur, although the game loop is housed in the animation
     class.
     '''
+
     def __init__(self, data_from_file):
         self.board = board.Board(data_from_file)
-        self.game_animation = None
+        self.simulation_going = False
+        self.cycles = 0
+        self.max_cycles = 300
 
     def count_my_neighbours(self, square, board_data):
         '''
@@ -49,8 +52,8 @@ class Game(object):
         - Not living square with three neigbours born.
         '''
 
-        for i, row in enumerate(board_data):
-            for j, square in enumerate(row):
+        for _i, row in enumerate(board_data):
+            for _j, square in enumerate(row):
                 square.neighbour_count = self.count_my_neighbours(square, board_data)
                 if square.is_alive == True and square.neighbour_count == 2:
                     square.will_be_alive = True
@@ -63,10 +66,16 @@ class Game(object):
         '''
         When all squares have had neighbour counts, then we can change each square.
         The neighbour count of all squares are reset, ready for next game loop.
+        The continue_simulation is used in run_simulation, but in the animate_simulation
+        it's ineffective.
         '''
 
-        for i, row in enumerate(board_data):
-            for j, square in enumerate(row):
+        for _i, row in enumerate(board_data):
+            for _j, square in enumerate(row):
+
+                if square.is_alive != square.will_be_alive:
+                    self.continue_simulation = True
+
                 square.is_alive = square.will_be_alive
                 square.neighbour_count = 0
 
@@ -74,15 +83,34 @@ class Game(object):
         '''
         This will be called from the self.animation object, since Tkinter will handle the game loop.
         '''
+
         board_data = self.board.data
         self.squares_evaluate(board_data)
         self.squares_change_states(board_data)
 
-    def run_simulation(self):
+    def animate_simulation(self):
         '''
-        Unit testing demands this is a seperate function, since the animation occurs when it 
+        Unit testing demands this is a seperate function, since the animation occurs when it
         is initialised, so let's call this from the run_app file.
         '''
 
         self.game_animation = animation.Animation(self, self.board)
 
+    def run_simulation(self):
+        '''
+        Rather than animate the results, run the simulation until there are no more
+        cells evolving. After the update_board() function is complete, all squares have been
+        evaluated and if any single square has changed its is_alive property, then the loop
+        continues. Otherwise the loop stops, and we've found the end state of this sequence.
+        '''
+
+        while True:
+            self.continue_simulation = False
+            self.cycles += 1
+            self.update_board()
+            if self.continue_simulation == False:
+                break
+            elif self.cycles >= self.max_cycles:
+                break
+
+        return self.cycles
