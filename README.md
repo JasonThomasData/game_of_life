@@ -1,10 +1,10 @@
 ###Conway's Game of Life
 
-The GOL is an environment where cells live and die depending on the numbers of their neighbours.
+The GOL is an environment where cells/squares live and die depending on the numbers of their neighbours.
 
 This is interesting to me for two reasons:
 
-- Given an arrangement of cells in any large number, it would be almost impossible for a human to determine what would happen on the board
+- Given an arrangement of squares in any large number, it would be almost impossible for a human to determine what would happen on the board
 
 - The universe in the simulation is entirely deterministic and the sequence for any pattern will always be the same
 
@@ -62,13 +62,19 @@ By the way, there is only one dependency there, but using requirements.txt is a 
 
 ###Usage
 
-Let's suppose we want to load the glider.cells map. Do:
+This program has two modes:
 
-    python3 run_app.py maps/glider.cells
+```animate``` - Loads a window where squares in the simulation will evolve in a window for you to see.
 
-That will open a window with the animation in it. You can close that animation the window, or by doing ```ctrl+c``` from the terminal.
+    python3 run_app.py animate maps/glider.cells
 
-If you want to change the animation, change the properties of the animation class in the application folder. 
+```get_cycles``` - Will not provide an animation, but will return an integer of how many cycles were required for the evolution to stop. The intention is to use the latter option for a machine learning project.
+
+    python3 run_app.py get_cycles maps/glider.cells
+
+If you want to change the animation speed or square width, change the properties of the Animation class in the application folder.
+
+The board where the squares evolve, in ```animation``` and ```get_cycles``` mode, will have a buffer around it. The Board class has the property to change that buffer. The buffer is a good idea because the shapes from the online repository of shapes are in files only large enough for the shapes, but some shapes will take over a board four times as large.
 
 ###Tests
 
@@ -80,15 +86,15 @@ To run the tests, stay in the project's root folder and run:
 
 This project uses Numpy, since that's a good way to handle very large MD lists. Itertools is used for looping, where possible/makes sense. Tkinter is used for the animation.
 
-The use of Tkinter required the Animation class to handle the game loop, since Tkinter has a built in method for animation loops, so that's the sensible way to do that.
+The use of Tkinter required the Animation class to handle the game loop, since Tkinter has a built in method for animation loops, so that's the sensible way to do that. If this is run in ```get_cycles```, however, just has a loop inside the Game class.
 
 There are two things about this project I would like to change if I get time:
 
-- The Animation class has details about square width and animation speed. The Board class has details about the buffer around the uploaded shapes. It would be better to have those detals passed to them from ```run_app```. Then we could allow the user to declare those properties at the terminal. It would just make a lot of sense to have ```run_app``` as the single point of user interface.
+- At the terminal, I would add an option to generate cells/squares randomly on the board, as that would be interesting to have random data. This would also be better for the machine learning aspect.
 
-- Also at the terminal, I would add an option to generate cells randomly on the board, as that would be interesting to have random data.
+- Create another program that collects the results, via a pipe, and saves those to a database to do some machine learning.
 
-This project may be great to do some machine learning to see what arrangement can get the best outcome: a) the most interesting results b) sustainable shapes c) the longest running game. To do that, I think a reinforcement learning algorithm or neural network would do the trick. This machine learning project could be as simple as piping the result of this program to a machine learning algorithm, with a database attached to collect the results.
+This machine learning could be interesting for a) the most interesting results b) sustainable shapes c) the longest running simulation. To do that, I think a neural network would do the trick.
 
 I made this project with Python3, Ubuntu 16.04 and Vim.
 
@@ -104,6 +110,4 @@ I did this project because:
 
 - Making a glider is a code test interviewers ask
 
-I suggest making your own GOL could be a lot of fun, but of course if you
-'d prefer to contribute then make a pull request.
-
+I suggest making your own GOL could be a lot of fun, but of course if you'd prefer to contribute then make a pull request.
