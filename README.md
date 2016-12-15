@@ -1,6 +1,6 @@
 ###Conway's Game of Life
 
-The GOL is an environment where cells/squares live and die depending on the numbers of their neighbours.
+The GOL is an environment where cells/squares live and die depending on the numbers of their neighbours. 
 
 This is interesting to me for two reasons:
 
