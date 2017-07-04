@@ -80,9 +80,11 @@ The board where the squares evolve, in ```animation``` and ```get_cycles``` mode
 
 To run the tests, stay in the project's root folder and run:
 
-    python3 -m unittest discover test/
+    nosetests test/
 
 ###Discussion
+
+It's amazing what I thought was "good", just one year ago.
 
 This project uses Numpy, since that's a good way to handle very large MD lists. Itertools is used for looping, where possible/makes sense. Tkinter is used for the animation.
 
