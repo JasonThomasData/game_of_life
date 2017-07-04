@@ -10,7 +10,7 @@ class Square(object):
         self.x = x
         self.y = y
         self.is_alive = is_alive
-        self.will__be_alive = is_alive
+        self.will_be_alive = is_alive
         self.neighbour_count = 0
         self.canvas_shape = None
 
